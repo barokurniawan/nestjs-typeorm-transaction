@@ -1,0 +1,20 @@
+version: '2'
+services:
+  database:
+    image: mysql:8.0.31-oracle
+    container_name: usm_database
+    environment:
+      MYSQL_ROOT_PASSWORD: "@@@udanup"
+      MYSQL_DATABASE: usm_database
+    volumes:
+      - ./docker/database:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    command:
+      [
+        'mysqld',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+07:00'
+      ]
