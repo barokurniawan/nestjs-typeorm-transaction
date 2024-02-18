@@ -1,7 +1,7 @@
-import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsersService } from './user.service';
-import { User } from './user.entity';
 import { Transactional } from 'typeorm-transactional';
+import { CreateUserDTO } from './dtos/create-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -15,14 +15,8 @@ export class UserController {
 
     @Transactional()
     @Post()
-    async createUser (@Body() payload: {user: User}) {
-        const user1 = await this.userService.create(payload.user);
-
-        const user2 = await this.userService.create(payload.user);
-
-        return [
-            user1,
-            user2,
-        ]
+    async createUser (@Body('user') createUserDto: CreateUserDTO) {
+        const user = await this.userService.create(createUserDto);
+        return user;
     }
 }

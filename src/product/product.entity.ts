@@ -1,18 +1,15 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class Product {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column()
-  firstName: string;
+  @Column({length: 12, nullable: false})
+  sku: string;
 
   @Column()
-  lastName: string;
-
-  @Column({nullable: true})
-  email: string;
+  productName: string;
 
   @Column({ default: true })
   isActive: boolean;
