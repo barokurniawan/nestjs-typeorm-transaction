@@ -3,6 +3,7 @@ import { ProductService } from './product.service';
 import { Transactional } from 'typeorm-transactional';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { KafkaService } from 'src/kafka/kafka.service';
+import KafkaTopics from 'src/kafka/kafka.topics';
 
 @Controller('product')
 export class ProductController {
@@ -14,9 +15,7 @@ export class ProductController {
 
     @Get()
     getProducts() {
-        const client = this.kafka.getClient();
-
-        client.emit('export-product', {});
+        this.kafka.emit(KafkaTopics.exportProduct, {target: 'csv'});
         return this.productService.findAll();
     }
 
