@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { Transactional } from 'typeorm-transactional';
 import { CreateUserDTO } from './dtos/create-user.dto';
@@ -11,6 +11,11 @@ export class UserController {
     @Get()
     getUsers () {
         return this.userService.findAll();
+    }
+
+    @Get(':id')
+    getUser (@Param('id') id: number) {
+        return this.userService.findOne(id);
     }
 
     @Transactional()

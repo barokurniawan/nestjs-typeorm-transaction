@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Transactional } from 'typeorm-transactional';
 import { CreateProductDTO } from './dtos/create-product.dto';
@@ -11,6 +11,17 @@ export class ProductController {
     @Get()
     getProducts () {
         return this.productService.findAll();
+    }
+
+    @Get(':id')
+    getProduct (@Param('id') id: number) {
+        return this.productService.findOne(id);
+    }
+
+    @Transactional()
+    @Delete(':id')
+    deleteProduct (@Param('id') id: number) {
+        return this.productService.remove(id);
     }
 
     @Transactional()
