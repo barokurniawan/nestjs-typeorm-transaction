@@ -3,6 +3,7 @@ import { CreateProductDTO } from './dtos/create-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { Repository } from 'typeorm';
+import { writeFile } from 'fs/promises';
 
 @Injectable()
 export class ProductService {
@@ -31,5 +32,24 @@ export class ProductService {
 
     create(productDto: CreateProductDTO) {
         return this.productRepository.save(productDto);
+    }
+
+    async exportAs(targetExt: 'csv' | 'xlsx') {
+        const rows = await this.findAll();
+        let chunks: string[] = [];
+
+        for (const row of rows) {
+            chunks.push([
+                row.id,
+                row.sku,
+                row.productName,
+                row.isActive
+            ].join(';'));
+        }
+
+        const csvContent = chunks.join("\r\n");
+        const targetPath = "storage/files/products." + targetExt;
+        await writeFile(targetPath, csvContent);
+        return targetPath;
     }
 }

@@ -3,11 +3,12 @@ import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './product.entity';
+import { KafkaModule } from 'src/kafka/kafka.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product])],
-  exports: [TypeOrmModule],
+  imports: [TypeOrmModule.forFeature([Product]), KafkaModule],
   providers: [ProductService],
-  controllers: [ProductController]
+  controllers: [ProductController],
+  exports: [TypeOrmModule, ProductService],
 })
 export class ProductModule {}

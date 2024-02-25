@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
 import { ProductModule } from './product/product.module';
+import { ProductConsumerController } from './product-consumer/product-consumer.controller';
+import { ProductConsumerModule } from './product-consumer/product-consumer.module';
+import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
   imports: [
@@ -35,8 +38,10 @@ import { ProductModule } from './product/product.module';
     }),
     UserModule,
     ProductModule,
+    ProductConsumerModule,
+    KafkaModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ProductConsumerController],
   providers: [AppService],
 })
 export class AppModule {}
