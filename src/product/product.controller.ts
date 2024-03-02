@@ -15,7 +15,7 @@ export class ProductController {
 
     @Get()
     getProducts() {
-        this.kafka.emit(KafkaTopics.exportProduct, {target: 'csv'});
+        this.kafka.emit(KafkaTopics.exportProduct, { target: 'csv' });
         return this.productService.findAll();
     }
 

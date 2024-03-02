@@ -5,7 +5,7 @@ import { microserviceConfig } from 'src/kafka-client.config';
 
 @Injectable()
 export class KafkaService {
-    @Client(microserviceConfig) 
+    @Client(microserviceConfig)
     private client: ClientKafka;
 
     getClient() {

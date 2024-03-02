@@ -5,7 +5,6 @@ export const microserviceConfig: KafkaOptions = {
     options: {
       client: {
         brokers: ['localhost:29092'],
-        retry: { retries: 3 }
       }
     }
 };

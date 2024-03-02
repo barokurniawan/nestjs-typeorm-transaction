@@ -44,4 +44,4 @@ import { KafkaModule } from './kafka/kafka.module';
   controllers: [AppController, ProductConsumerController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
