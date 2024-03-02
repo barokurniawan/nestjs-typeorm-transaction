@@ -1,7 +1,8 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import KafkaTopics from 'src/kafka/kafka.topics';
 import { ProductService } from 'src/product/product.service';
+import { Transactional } from 'typeorm-transactional';
 
 @Controller('product-consumer')
 export class ProductConsumerController {
@@ -11,8 +12,9 @@ export class ProductConsumerController {
     ) { }
 
     @MessagePattern(KafkaTopics.exportProduct)
+    @Transactional()
     exportProductToCsv(@Payload() payload: any) {
-        console.log(`${KafkaTopics.exportProduct}...1`, payload);
+        console.log(`${KafkaTopics.exportProduct}...`, payload);
 
         return this.productService.exportAs('csv');
     }

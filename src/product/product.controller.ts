@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Res, StreamableFile } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Transactional } from 'typeorm-transactional';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { KafkaService } from 'src/kafka/kafka.service';
 import KafkaTopics from 'src/kafka/kafka.topics';
+import { createReadStream } from 'fs';
+import { Response } from 'express';
 
 @Controller('product')
 export class ProductController {
@@ -15,8 +17,25 @@ export class ProductController {
 
     @Get()
     getProducts() {
-        this.kafka.emit(KafkaTopics.exportProduct, { target: 'csv' });
         return this.productService.findAll();
+    }
+
+    @Post("/export")
+    exportProduct() {
+        this.kafka.emit(KafkaTopics.exportProduct, { target: 'csv' });
+
+        return { ok: true };
+    }
+
+    @Get("/export")
+    async exportedProduct(@Res({ passthrough: true }) res: Response) {
+        const file = createReadStream('./storage/files/products.csv');
+        res.set({
+            'Content-Type': 'text/csv',
+            'Content-Disposition': 'attachment; filename="products.csv"'
+        });
+
+        return new StreamableFile(file);
     }
 
     @Get(':id')
