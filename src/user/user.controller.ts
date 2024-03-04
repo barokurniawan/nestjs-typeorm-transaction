@@ -15,7 +15,7 @@ export class UserController {
 
     @Get(':id')
     getUser (@Param('id') id: number) {
-        return this.userService.findOne(id);
+        return this.userService.findOneById(id);
     }
 
     @Transactional()
