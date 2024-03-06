@@ -8,10 +8,13 @@ async function bootstrap() {
   initializeTransactionalContext({ storageDriver: StorageDriver.AUTO });
 
   const app = await NestFactory.create(AppModule);
-  app.connectMicroservice(microserviceConfig);
-
   app.useGlobalPipes(new ValidationPipe());
-  await app.startAllMicroservices();
+
+  if (process.env.MICRO_SVC_ENABLED) {
+    app.connectMicroservice(microserviceConfig);
+    await app.startAllMicroservices();
+  }
+
   await app.listen(3000);
 }
 
