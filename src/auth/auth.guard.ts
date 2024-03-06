@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
     const isExcluded = this.isExcluded(request.path);
 
-    console.log("here 1");
     if (!token && !isExcluded) {
       throw new UnauthorizedException();
     }
