@@ -24,13 +24,23 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    const payload = await this.jwtService.verifyAsync(
-      token,
-      { secret: jwtConstants.secret }
-    );
+    await this.verifyToken(token);
 
-    console.log("payload", payload);
     return true;
+  }
+
+  private async verifyToken(token: string) {
+    let user = null;
+    try {
+      user = await this.jwtService.verifyAsync(
+        token,
+        { secret: jwtConstants.secret }
+      );
+    } catch (error) {
+      throw new UnauthorizedException("Unable to verify the token");
+    }
+
+    return user;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

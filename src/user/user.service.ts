@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDTO } from './dtos/create-user.dto';
 
@@ -9,10 +9,20 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  findAll(search?: string): Promise<User[]> {
+    let criteria: FindOptionsWhere<User> | FindOptionsWhere<User>[];
+    if (search) {
+      criteria = [
+        { firstName: Like(`%${search}%`) },
+        { email: Like(`%${search}%`) }
+      ];
+    }
+
+    return this.usersRepository.find({
+      where: criteria
+    });
   }
 
   findOneById(id: number): Promise<User | null> {
