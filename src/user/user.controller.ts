@@ -1,7 +1,7 @@
 import { Body, ClassSerializerInterceptor, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { Transactional } from 'typeorm-transactional';
-import { CreateUserDTO } from './dtos/create-user.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')

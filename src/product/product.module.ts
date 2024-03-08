@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './product.entity';
+import { Product } from './entities/product.entity';
 import { KafkaModule } from 'src/kafka/kafka.module';
 
 @Module({
@@ -11,4 +11,4 @@ import { KafkaModule } from 'src/kafka/kafka.module';
   controllers: [ProductController],
   exports: [TypeOrmModule, ProductService],
 })
-export class ProductModule {}
+export class ProductModule { }

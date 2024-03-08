@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateProductDTO } from './dtos/create-product.dto';
+import { CreateProductDTO } from './dto/create-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './product.entity';
+import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { writeFile } from 'fs/promises';
 

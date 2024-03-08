@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Res, StreamableFile } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Transactional } from 'typeorm-transactional';
-import { CreateProductDTO } from './dtos/create-product.dto';
+import { CreateProductDTO } from './dto/create-product.dto';
 import { KafkaService } from 'src/kafka/kafka.service';
 import KafkaTopics from 'src/kafka/kafka.topics';
 import { createReadStream } from 'fs';
