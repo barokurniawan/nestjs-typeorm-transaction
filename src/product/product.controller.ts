@@ -16,8 +16,9 @@ export class ProductController {
     ) { }
 
     @Get()
-    getProducts() {
-        return this.productService.findAll();
+    async getProducts() {
+        const data = await this.productService.findAll();
+        return { data };
     }
 
     @Post("/export")
@@ -39,20 +40,22 @@ export class ProductController {
     }
 
     @Get(':id')
-    getProduct(@Param('id') id: number) {
-        return this.productService.findOne(id);
+    async getProduct(@Param('id') id: number) {
+        const data = await this.productService.findOne(id);
+        return { data };
     }
 
     @Transactional()
     @Delete(':id')
-    deleteProduct(@Param('id') id: number) {
-        return this.productService.remove(id);
+    async deleteProduct(@Param('id') id: number) {
+        const data = await this.productService.remove(id);
+        return { data };
     }
 
     @Transactional()
     @Post()
     async createProduct(@Body('product') createUserDto: CreateProductDTO) {
-        const product = await this.productService.create(createUserDto);
-        return product;
+        const data = await this.productService.create(createUserDto);
+        return { data };
     }
 }

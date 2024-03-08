@@ -17,14 +17,14 @@ export class UserController {
 
     @Get(':id')
     async getUser(@Param('id') id: number) {
-        const user = await this.userService.findOneById(id);
-        return user;
+        const data = await this.userService.findOneById(id);
+        return { data };
     }
 
     @Transactional()
     @Post()
     async createUser(@Body('user') createUserDto: CreateUserDTO) {
-        const user = await this.userService.create(createUserDto);
-        return user;
+        const data = await this.userService.create(createUserDto);
+        return { data };
     }
 }
