@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { writeFile } from 'fs/promises';
+import { ProductCategoryService } from 'src/product-category/product-category.service';
 
 @Injectable()
 export class ProductService {
@@ -11,6 +12,7 @@ export class ProductService {
     constructor(
         @InjectRepository(Product)
         private productRepository: Repository<Product>,
+        private productCategoryService: ProductCategoryService,
     ) { }
 
     findAll() {
@@ -18,7 +20,7 @@ export class ProductService {
     }
 
     async findOne(id: number) {
-        const row = await this.productRepository.findOneBy({ id });
+        const row = await this.productRepository.findOne({ where: { id }, relations: { productCategory: true } });
         if (!row) {
             throw new BadRequestException("Product not found");
         }
@@ -30,8 +32,19 @@ export class ProductService {
         await this.productRepository.delete(id);
     }
 
-    create(productDto: CreateProductDTO) {
-        return this.productRepository.save(productDto);
+    async create(productDto: CreateProductDTO) {
+
+        const productCategory = await this.productCategoryService.findOne(productDto.productCategoryId);
+        if (!productCategory) {
+            throw new BadRequestException("Product category not found");
+        }
+
+        const product = new Product();
+        product.productCategory = productCategory;
+        product.productName = productDto.productName;
+        product.sku = productDto.sku;
+
+        return this.productRepository.save(product);
     }
 
     async exportAs(targetExt: 'csv' | 'xlsx') {

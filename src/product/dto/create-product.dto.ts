@@ -1,4 +1,4 @@
-import { IsAlphanumeric, IsNotEmpty, MaxLength } from "class-validator";
+import { IsAlphanumeric, IsNotEmpty, IsNumber, MaxLength } from "class-validator";
 
 export class CreateProductDTO {
 
@@ -9,4 +9,8 @@ export class CreateProductDTO {
 
     @IsNotEmpty()
     productName: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    productCategoryId: number;
 }
