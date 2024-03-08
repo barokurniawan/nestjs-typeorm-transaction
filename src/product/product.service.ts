@@ -5,6 +5,7 @@ import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { writeFile } from 'fs/promises';
 import { ProductCategoryService } from 'src/product-category/product-category.service';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class ProductService {
@@ -32,17 +33,27 @@ export class ProductService {
         await this.productRepository.delete(id);
     }
 
-    async create(productDto: CreateProductDTO) {
+    async isSkuAvailable(sku: string) {
+        const countRows = await this.productRepository.countBy({ sku });
+        return countRows == 0;
+    }
+
+    async create(productDto: CreateProductDTO, user: User) {
 
         const productCategory = await this.productCategoryService.findOne(productDto.productCategoryId);
         if (!productCategory) {
             throw new BadRequestException("Product category not found");
         }
 
+        if (!await this.isSkuAvailable(productDto.sku)) {
+            throw new BadRequestException(`SKU ${productDto.sku} is not available`);
+        }
+
         const product = new Product();
         product.productCategory = productCategory;
         product.productName = productDto.productName;
         product.sku = productDto.sku;
+        product.user = user;
 
         return this.productRepository.save(product);
     }

@@ -6,6 +6,8 @@ import { KafkaService } from 'src/kafka/kafka.service';
 import KafkaTopics from 'src/kafka/kafka.topics';
 import { createReadStream } from 'fs';
 import { Response } from 'express';
+import { User } from 'src/lib/decorators/user-decorator';
+import { User as UserEntity } from 'src/user/entities/user.entity';
 
 @Controller('product')
 export class ProductController {
@@ -54,8 +56,8 @@ export class ProductController {
 
     @Transactional()
     @Post()
-    async createProduct(@Body('product') createUserDto: CreateProductDTO) {
-        const data = await this.productService.create(createUserDto);
+    async createProduct(@Body('product') createUserDto: CreateProductDTO, @User() user: UserEntity) {
+        const data = await this.productService.create(createUserDto, user);
         return { data };
     }
 }

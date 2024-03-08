@@ -1,4 +1,5 @@
 import { ProductCategory } from 'src/product-category/entities/product-category.entity';
+import { User } from 'src/user/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()
@@ -15,6 +16,10 @@ export class Product {
   @ManyToOne(() => ProductCategory)
   @JoinColumn()
   productCategory?: ProductCategory;
+
+  @ManyToOne(() => User)
+  @JoinColumn()
+  user?: User;
 
   @Column({ default: true })
   isActive: boolean;

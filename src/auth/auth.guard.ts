@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Request } from 'express';
 import AuthGuardSetting from './setting.guard';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import UsmCrypto from 'src/lib/usm-crypto';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -24,23 +24,9 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    await this.verifyToken(token);
+    await UsmCrypto.verifyToken(this.jwtService, token);
 
     return true;
-  }
-
-  private async verifyToken(token: string) {
-    let user = null;
-    try {
-      user = await this.jwtService.verifyAsync(
-        token,
-        { secret: jwtConstants.secret }
-      );
-    } catch (error) {
-      throw new UnauthorizedException("Unable to verify the token");
-    }
-
-    return user;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
