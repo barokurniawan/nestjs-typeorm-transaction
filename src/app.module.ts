@@ -13,6 +13,7 @@ import { DatabaseConfig } from './lib/database';
 import { EnvConfig } from './lib/configs';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { AuthMiddleware } from './auth/auth.middleware';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthMiddleware } from './auth/auth.middleware';
     KafkaModule,
     AuthModule,
     ProductCategoryModule,
+    MailerModule,
   ],
   controllers: [AppController, ProductConsumerController],
   providers: [
