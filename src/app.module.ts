@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { DatabaseConfig } from './lib/database';
 import { EnvConfig } from './lib/environment';
+import { ProductCategoryModule } from './product-category/product-category.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { EnvConfig } from './lib/environment';
     ProductConsumerModule,
     KafkaModule,
     AuthModule,
+    ProductCategoryModule,
   ],
   controllers: [AppController, ProductConsumerController],
   providers: [
