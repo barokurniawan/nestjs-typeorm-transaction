@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { writeFile } from 'fs/promises';
 import { ProductCategoryService } from 'src/product-category/product-category.service';
 import { User } from 'src/user/entities/user.entity';
+import { UpdateProductDTO } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -56,6 +57,25 @@ export class ProductService {
         product.user = user;
 
         return this.productRepository.save(product);
+    }
+
+    update(productId: number, productDto: UpdateProductDTO) {
+        return this.productRepository.update({ id: productId }, productDto);
+    }
+
+    /**
+     * 
+     * must be only executed via ProductStock service
+     * 
+     * @param productId 
+     * @param stockQty qty after consumed
+     * @param currentStockQty qty of the stock before consumed 
+     */
+    updateStockQty(productId: number, stockQty: number, currentStockQty: number) {
+        return this.productRepository.update({
+            id: productId,
+            stockQty: currentStockQty,
+        }, { stockQty: stockQty });
     }
 
     async exportAs(targetExt: 'csv' | 'xlsx') {

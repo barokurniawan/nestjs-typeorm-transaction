@@ -14,6 +14,7 @@ import { EnvConfig } from './lib/configs';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { MailerModule } from './mailer/mailer.module';
+import { ProductStockModule } from './product-stock/product-stock.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { MailerModule } from './mailer/mailer.module';
     AuthModule,
     ProductCategoryModule,
     MailerModule,
+    ProductStockModule,
   ],
   controllers: [AppController, ProductConsumerController],
   providers: [

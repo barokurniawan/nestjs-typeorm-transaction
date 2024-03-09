@@ -1,6 +1,6 @@
 import { ProductCategory } from 'src/product-category/entities/product-category.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Product {
@@ -13,6 +13,9 @@ export class Product {
   @Column()
   productName: string;
 
+  @Column()
+  stockQty: number;
+
   @ManyToOne(() => ProductCategory)
   @JoinColumn()
   productCategory?: ProductCategory;
@@ -23,4 +26,10 @@ export class Product {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
