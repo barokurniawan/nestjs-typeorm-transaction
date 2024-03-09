@@ -1,22 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { MailerService as NestMailerService } from '@nestjs-modules/mailer';
-import { Attachment } from 'nodemailer/lib/mailer';
+import { KafkaService } from 'src/kafka/kafka.service';
+import KafkaTopics from 'src/kafka/kafka.topics';
+import SendEmailPayload from './payloads/send-email.payload';
 
 @Injectable()
 export class MailerService {
 
-    constructor(private readonly mailerService: NestMailerService) { }
+    constructor(
+        private readonly kafka: KafkaService,
+    ) { }
 
-    async sendEmail(to: string, subject: string, content: string, attachments?: Attachment[]
+    async sendEmail(to: string, subject: string, html: string, attachments?: string[]
     ): Promise<void> {
-        const info = await this.mailerService.sendMail({
-            to,
-            subject,
-            attachments,
-            html: content,
-        });
-
-        console.log("info", info);
+        const payload: SendEmailPayload = {
+            to: to,
+            html: html,
+            subject: subject
+        };
+        this.kafka.emit(KafkaTopics.sendEmail, payload);
     }
 
 }

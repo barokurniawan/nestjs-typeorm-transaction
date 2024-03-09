@@ -1,5 +1,6 @@
 enum KafkaTopics {
-    exportProduct = "export-product"
+    exportProduct = "export-product",
+    sendEmail = "send-email",
 }
 
 export default KafkaTopics;

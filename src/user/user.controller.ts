@@ -6,7 +6,9 @@ import { CreateUserDTO } from './dto/create-user.dto';
 @Controller('user')
 export class UserController {
 
-    constructor(private readonly userService: UsersService) { }
+    constructor(
+        private readonly userService: UsersService,
+    ) { }
 
     @Get()
     async getUsers(@Query() query?: { search?: string, page?: number, take?: number }) {
