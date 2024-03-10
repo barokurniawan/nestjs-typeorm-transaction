@@ -15,6 +15,7 @@ import { ProductCategoryModule } from './product-category/product-category.modul
 import { AuthMiddleware } from './auth/auth.middleware';
 import { MailerModule } from './mailer/mailer.module';
 import { ProductStockModule } from './product-stock/product-stock.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ProductStockModule } from './product-stock/product-stock.module';
     ProductCategoryModule,
     MailerModule,
     ProductStockModule,
+    TransactionModule,
   ],
   controllers: [AppController, ProductConsumerController],
   providers: [

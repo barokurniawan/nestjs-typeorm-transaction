@@ -13,7 +13,7 @@ export class Product {
   @Column()
   productName: string;
 
-  @Column()
+  @Column({ default: 0 })
   stockQty: number;
 
   @ManyToOne(() => ProductCategory)
