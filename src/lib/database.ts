@@ -14,7 +14,7 @@ export const DatabaseConfig = TypeOrmModule.forRootAsync({
             entities: ["dist/**/*.entity{.ts,.js}"],
             migrations: ["dist/migrations/*{.ts,.js}"],
             logging: true,
-            synchronize: true,
+            synchronize: false,
             migrationsRun: false,
         };
     },

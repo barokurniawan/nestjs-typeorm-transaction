@@ -58,3 +58,4 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 docker
 storage/files/*
 !storage/files/.gitkeep
+datasource.ts

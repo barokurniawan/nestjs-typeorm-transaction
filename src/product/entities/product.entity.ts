@@ -13,6 +13,9 @@ export class Product {
   @Column()
   productName: string;
 
+  @Column({ type: 'longtext' })
+  description: string;
+
   @Column({ default: 0 })
   stockQty: number;
 

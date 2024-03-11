@@ -9,7 +9,7 @@ export class User {
   @Column()
   firstName: string;
 
-  @Column()
+  @Column({ comment: "this is a lastname of an user" })
   lastName: string;
 
   @Column({ nullable: true })

@@ -1,6 +1,7 @@
 version: '2'
 services:
   zookeeper:
+    restart: always
     container_name: usm_zookeeper
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -10,6 +11,7 @@ services:
       - 22181:2181
 
   kafka:
+    restart: always
     container_name: usm_kafka
     image: confluentinc/cp-kafka:latest
     depends_on:
@@ -25,6 +27,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   database:
+    restart: always
     image: mysql:8.0.31-oracle
     container_name: usm_database
     environment:
@@ -34,7 +37,6 @@ services:
       - ./docker/database:/var/lib/mysql
     ports:
       - "3306:3306"
-    restart: always
     command:
       [
         'mysqld',
