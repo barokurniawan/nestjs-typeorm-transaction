@@ -16,6 +16,7 @@ import { AuthMiddleware } from './auth/auth.middleware';
 import { MailerModule } from './mailer/mailer.module';
 import { ProductStockModule } from './product-stock/product-stock.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TransactionModule } from './transaction/transaction.module';
     MailerModule,
     ProductStockModule,
     TransactionModule,
+    CacheModule.register({ isGlobal: true }),
   ],
   controllers: [AppController, ProductConsumerController],
   providers: [
