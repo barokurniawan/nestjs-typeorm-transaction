@@ -17,6 +17,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { ProductStockModule } from './product-stock/product-stock.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { SeederModule } from './cli/seeder/seeder.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     ProductStockModule,
     TransactionModule,
     CacheModule.register({ isGlobal: true }),
+    SeederModule,
   ],
   controllers: [AppController, ProductConsumerController],
   providers: [
