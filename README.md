@@ -3,7 +3,7 @@ I used to have expresJS as a framework for BE in nodejs, let's try this one.
 
 ## Notes
 - Better to use migration in typeORM rather than rely on the ORM sync magic, it removes old colom and creates new one event if you just change the column length.
-- typeORM doesn't have OOP ways to create migration, raw query is used here (that is all I know for now)
+- TypeORM support create migration based on changes in the entity files.
 - In typeORM there is nothing like `Op.or` operator. To perform an "or criteria condition" you can use `where: [{firstname: Like("%john%")}, {email: Like("%john%")}]` it will produce `where firstname like %john% or email like %john%`. 
 
 ## Migration
@@ -17,3 +17,8 @@ TypeORM support generates migration automatically based on changes in the entity
 - `npm run migration:run` will persist the changes to the database.
 
 All these commands will only work if `datasource.ts` is created, `datasource.ts` will be invoked by the migration script, see `package.json` file for details. 
+
+### Run and Generate seeder
+Command to run and generate seeder are configured in `package.json` file.
+- Run seeder by `npm run seed:run`. Required `datasource.ts` file.
+- Generate seeder by `npm run seed:create -- --name your-seeder-name`.

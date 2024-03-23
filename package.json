@@ -22,7 +22,7 @@
     "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migrations/migrations -d ./datasource.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d ./datasource.ts",
     "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./datasource.ts",
-    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create"
+    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create -r ./src/seeds"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.1",
